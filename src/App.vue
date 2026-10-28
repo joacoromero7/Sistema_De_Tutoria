@@ -3,6 +3,7 @@ import { provide, ref, shallowRef } from 'vue'
 import CalificarTutoria from './components/CalificarTutoria.vue'
 import CambiarContrasena from './components/CambiarContrasena.vue'
 import CerrarSesion from './components/CerrarSesion.vue'
+import AgregarCurso from './components/AgregarCurso.vue'
 import Cursos from './components/Cursos.vue'
 import DetalleCurso from './components/DetalleCurso.vue'
 import DetalleTutoria from './components/DetalleTutoria.vue'
@@ -28,6 +29,7 @@ const views = {
   'editar-perfil': EditarPerfil,
   notificaciones: Notificaciones,
   'cambiar-contrasena': CambiarContrasena,
+  'agregar-curso': AgregarCurso,
   'inicio-sesion': InicioSesion,
   registrarse: Registrarse,
   'recuperar-contrasena': RecuperarContrasena,
@@ -49,3 +51,7 @@ provide('currentViewKey', activeViewKey)
 <template>
   <component :is="activeView" :key="activeViewKey" />
 </template>
+
+
+
+

@@ -37,7 +37,7 @@ const navigation = [
   <div class="app-shell">
     <header class="topbar">
       <button class="brand" type="button" @click="navigateView('inicio')">{{ title }}</button>
-      <div class="account"><div class="account-copy"><span>{{ user }}</span><small>{{ role }}</small></div><button class="icon-btn" type="button" aria-label="Ver notificaciones" @click="navigateView('notificaciones')">♧</button><button class="avatar" type="button" aria-label="Ver perfil" @click="navigateView('perfil')">◉</button></div>
+      <div class="account"><div class="account-copy"><span>{{ user }}</span><small>{{ role }}</small></div><button class="icon-btn notification-button" type="button" aria-label="Ver notificaciones" @click="navigateView('notificaciones')"><span aria-hidden="true">🔔</span></button><button class="avatar" type="button" aria-label="Ver perfil" @click="navigateView('perfil')"><span aria-hidden="true">MB</span></button></div>
     </header>
     <nav v-if="!showSidebar" class="public-nav" aria-label="Navegación de acceso"><button type="button" @click="navigateView('inicio')">Inicio</button><button type="button" @click="navigateView('inicio-sesion')">Iniciar sesión</button><button class="public-primary" type="button" @click="navigateView('registrarse')">Crear cuenta</button></nav>
     <div class="workspace" :class="{ 'workspace-public': !showSidebar }">
@@ -78,3 +78,7 @@ label { display:grid; gap:7px; font-weight:700; color:#40505a; } input,select,te
 @media (max-width:800px) { .sidebar { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; border-right:0; border-bottom:1px solid #e3e8ef; }.session { grid-column:1/-1; margin-top:0; }.public-nav { flex-wrap:wrap; } }
 @media (max-width:480px) { .sidebar { grid-template-columns:1fr; }.session { grid-column:auto; }.public-nav { justify-content:stretch; }.public-nav button { flex:1; } }
 </style>
+
+
+
+

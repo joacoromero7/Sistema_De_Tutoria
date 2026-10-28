@@ -71,3 +71,7 @@ function reserve() { reserved.value = true }
 <style scoped>
 .calendar-day.holiday{background:#fff0ef;color:#c05a54;text-decoration:line-through;cursor:not-allowed}.calendar-legend{display:flex;gap:14px;margin-top:14px;color:#7c8aa0;font-size:.75rem}.calendar-legend span{display:inline-flex;align-items:center;gap:5px}.legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block}.holiday-dot{background:#e98982}.selected-dot{background:#315fce}
 </style>
+
+
+
+
