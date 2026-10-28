@@ -38,14 +38,19 @@ const views = {
 
 const activeView = shallowRef(Home)
 const activeViewKey = ref('inicio')
+const currentRole = ref('Profesor/a')
+const studentViews = new Set(['inicio', 'mis-tutorias', 'detalle-tutoria', 'notificaciones', 'perfil', 'inicio-sesion', 'cerrar-sesion'])
 
 provide('navigateView', (viewKey) => {
   if (!views[viewKey]) return
+  if (currentRole.value === 'Estudiante' && !studentViews.has(viewKey)) return
   activeViewKey.value = viewKey
   activeView.value = views[viewKey]
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 provide('currentViewKey', activeViewKey)
+provide('currentRole', currentRole)
+provide('setRole', (role) => { currentRole.value = role })
 </script>
 
 <template>

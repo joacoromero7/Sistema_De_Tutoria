@@ -2,18 +2,11 @@
 import { inject } from 'vue'
 import SistemaLayout from './SistemaLayout.vue'
 const navigateView = inject('navigateView', () => {})
+const currentRole = inject('currentRole', 'Profesor/a')
 </script>
 
 <template>
-  <SistemaLayout breadcrumb="Inicio">
-    <section class="panel"><h1>Bienvenido/a al Sistema de Tutorías</h1><p class="muted">Accedé rápidamente a tus cursos, tutorías y notificaciones.</p><div class="grid grid-3">
-      <article class="card"><div class="card-head"></div><div class="card-body"><h3>Cursos</h3><p>Consultá materias y espacios curriculares.</p><button class="btn primary" @click="navigateView('cursos')">Ver cursos</button></div></article>
-      <article class="card"><div class="card-head red"></div><div class="card-body"><h3>Mis tutorías</h3><p>Revisá reservas y estados.</p><button class="btn soft" @click="navigateView('mis-tutorias')">Ver tutorías</button></div></article>
-      <article class="card"><div class="card-body"><h3>Próximas actividades</h3><p>Revisá avisos y novedades del sistema.</p><button class="btn success" @click="navigateView('notificaciones')">Ver notificaciones</button></div></article>
-    </div></section>
-  </SistemaLayout>
+  <SistemaLayout breadcrumb="Inicio"><section class="panel"><template v-if="currentRole === 'Estudiante'"><span class="eyebrow">Mi agenda académica</span><h1>Hola, Juan</h1><p class="muted">Estas son las tutorías a las que estás citado.</p><div class="student-summary"><div class="summary-icon">◷</div><div><strong>2 tutorías próximas</strong><span>Matemática y Física</span></div></div><div class="grid grid-2 student-cards"><article class="card"><div class="card-head"></div><div class="card-body"><span class="card-kicker">Matemática</span><h3>Miércoles · 7:30 a 8:20</h3><p>Aula 4 · María Becerra</p><button class="btn primary" @click="navigateView('mis-tutorias')">Ver mis tutorías</button></div></article><article class="card"><div class="card-head red"></div><div class="card-body"><span class="card-kicker">Física</span><h3>Viernes · 12:30 a 13:20</h3><p>Aula 2 · Joaquín Pérez</p><button class="btn soft" @click="navigateView('mis-tutorias')">Ver mis tutorías</button></div></article></div></template><template v-else><h1>Bienvenido/a al Sistema de Tutorías</h1><p class="muted">Accedé rápidamente a tus cursos, tutorías y notificaciones.</p><div class="grid grid-3"><article class="card"><div class="card-head"></div><div class="card-body"><h3>Cursos</h3><p>Consultá materias y espacios curriculares.</p><button class="btn primary" @click="navigateView('cursos')">Ver cursos</button></div></article><article class="card"><div class="card-head red"></div><div class="card-body"><h3>Mis tutorías</h3><p>Revisá reservas y estados.</p><button class="btn soft" @click="navigateView('mis-tutorias')">Ver tutorías</button></div></article><article class="card"><div class="card-body"><h3>Próximas actividades</h3><p>Revisá avisos y novedades del sistema.</p><button class="btn success" @click="navigateView('notificaciones')">Ver notificaciones</button></div></article></div></template></section></SistemaLayout>
 </template>
 
-
-
-
+<style scoped>.eyebrow{color:#315fce;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.student-summary{display:flex;align-items:center;gap:12px;width:max-content;margin:22px 0;padding:13px 17px;border:1px solid #dce7ff;border-radius:14px;background:#f0f4ff;color:#315fce}.student-summary strong,.student-summary span{display:block}.student-summary span{color:#718096;font-size:.85rem}.summary-icon{font-size:1.4rem}.card-kicker{color:#315fce;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.student-cards .card{min-height:235px}</style>

@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref } from 'vue'
+import { computed, inject, ref } from 'vue'
 
 const props = defineProps({
   title: { type: String, default: 'Sistema de Tutorías' },
@@ -11,6 +11,7 @@ const props = defineProps({
 
 const navigateView = inject('navigateView', () => {})
 const currentViewKey = inject('currentViewKey', ref('inicio'))
+const currentRole = inject('currentRole', ref(props.role))
 
 const navigation = [
   { title: 'General', items: [
@@ -31,18 +32,26 @@ const navigation = [
     { key: 'cambiar-contrasena', label: 'Cambiar contraseña', icon: '⌑' },
   ] },
 ]
+
+const visibleNavigation = computed(() => currentRole.value === 'Estudiante'
+  ? [{ title: 'Mi espacio', items: [
+      { key: 'inicio', label: 'Inicio', icon: '⌂' },
+      { key: 'mis-tutorias', label: 'Mis tutorías citadas', icon: '◷' },
+      { key: 'notificaciones', label: 'Notificaciones', icon: '🔔' },
+    ] }, { title: 'Mi cuenta', items: [{ key: 'perfil', label: 'Mi perfil', icon: '◉' }] }]
+  : navigation)
 </script>
 
 <template>
   <div class="app-shell">
     <header class="topbar">
       <button class="brand" type="button" @click="navigateView('inicio')">{{ title }}</button>
-      <div class="account"><div class="account-copy"><span>{{ user }}</span><small>{{ role }}</small></div><button class="icon-btn notification-button" type="button" aria-label="Ver notificaciones" @click="navigateView('notificaciones')"><span aria-hidden="true">🔔</span></button><button class="avatar" type="button" aria-label="Ver perfil" @click="navigateView('perfil')"><span aria-hidden="true">MB</span></button></div>
+      <div class="account"><div class="account-copy"><span>{{ currentRole === 'Estudiante' ? 'Juan Pérez' : user }}</span><small>{{ currentRole }}</small></div><button class="icon-btn notification-button" type="button" aria-label="Ver notificaciones" @click="navigateView('notificaciones')"><span aria-hidden="true">🔔</span></button><button class="avatar" type="button" aria-label="Ver perfil" @click="navigateView('perfil')"><span aria-hidden="true">{{ currentRole === 'Estudiante' ? 'JP' : 'MB' }}</span></button></div>
     </header>
     <nav v-if="!showSidebar" class="public-nav" aria-label="Navegación de acceso"><button type="button" @click="navigateView('inicio')">Inicio</button><button type="button" @click="navigateView('inicio-sesion')">Iniciar sesión</button><button class="public-primary" type="button" @click="navigateView('registrarse')">Crear cuenta</button></nav>
     <div class="workspace" :class="{ 'workspace-public': !showSidebar }">
       <aside v-if="showSidebar" class="sidebar" aria-label="Menú principal">
-        <div v-for="section in navigation" :key="section.title" class="nav-section"><h2>{{ section.title }}</h2><button v-for="item in section.items" :key="item.key" class="nav-item" :class="{ active: currentViewKey === item.key }" type="button" :aria-current="currentViewKey === item.key ? 'page' : undefined" @click="navigateView(item.key)"><span class="nav-icon" aria-hidden="true">{{ item.icon }}</span><span>{{ item.label }}</span></button></div>
+        <div v-for="section in visibleNavigation" :key="section.title" class="nav-section"><h2>{{ section.title }}</h2><button v-for="item in section.items" :key="item.key" class="nav-item" :class="{ active: currentViewKey === item.key }" type="button" :aria-current="currentViewKey === item.key ? 'page' : undefined" @click="navigateView(item.key)"><span class="nav-icon" aria-hidden="true">{{ item.icon }}</span><span>{{ item.label }}</span></button></div>
         <button class="session" type="button" @click="navigateView('cerrar-sesion')"><span aria-hidden="true">↪</span> Cerrar sesión</button>
       </aside>
       <main class="content"><div v-if="breadcrumb" class="breadcrumb">{{ breadcrumb }}</div><slot /></main>
